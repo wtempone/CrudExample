@@ -5,6 +5,11 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { Storage, IonicStorageModule } from '@ionic/storage';
 
 import { MyApp } from './app.component';
+import { Facebook } from '@ionic-native/facebook';
+import { FacebookModule } from 'ngx-facebook';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { CardsPage } from '../pages/cards/cards';
 import { ContentPage } from '../pages/content/content';
@@ -39,6 +44,15 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 export function HttpLoaderFactory(http: Http) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+// AF2 Settings
+export const firebaseConfig = {
+    apiKey: "AIzaSyAh3n6hFmwk9d6ydUEr8RXf8bFSX36vH8E",
+    authDomain: "memory-friends.firebaseapp.com",
+    databaseURL: "https://memory-friends.firebaseio.com",
+    projectId: "memory-friends",
+    storageBucket: "memory-friends.appspot.com",
+    messagingSenderId: "518522696281"
+};
 
 export function provideSettings(storage: Storage) {
   /**
@@ -84,7 +98,12 @@ export function provideSettings(storage: Storage) {
       }
     }),
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
+    IonicStorageModule.forRoot(),
+        AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule, 
+    AngularFireAuthModule, 
+    FacebookModule.forRoot()
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
