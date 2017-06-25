@@ -8,17 +8,48 @@ import { Item } from '../models/item';
 
 @Injectable()
 export class Items {
-
-  constructor(public http: Http, public api: Api) {
+  items;
+  constructor(
+    public http: Http, 
+    public api: Api
+  ) {
+    
   }
 
   query(params?: any) {
-    return this.api.get('/items', params)
+    return this.api.getList('/items', params)
       .map(resp => resp.json());
   }
 
   add(item: Item) {
   }
+
+  addContact(id, name, address, phone, city) {
+    if(id) {
+      this.contactList.update(id, {
+        name: name,
+        address: address,
+        phone: phone,
+        city: city
+      }).then( newContact => {
+        this.navCtrl.pop();
+      }, error => {
+        console.log(error);
+      });
+    } else {
+      this.contactList.push({
+        name: name,
+        address: address,
+        phone: phone,
+        city: city
+      }).then( newContact => {
+        this.navCtrl.pop();
+      }, error => {
+        console.log(error);
+      });
+    }
+  }
+
 
   delete(item: Item) {
   }
